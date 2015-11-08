@@ -97,6 +97,7 @@ readseg(uintptr_t va, uint32_t count, uint32_t offset) {
 void
 bootmain(void) {
     // read the 1st page off disk
+    // 读取磁盘的第一页，然后判断一下是不是ELF文件
     readseg((uintptr_t)ELFHDR, SECTSIZE * 8, 0);
 
     // is this a valid ELF?
