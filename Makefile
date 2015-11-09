@@ -119,6 +119,9 @@ kernel = $(call totarget,kernel)
 
 $(kernel): $(KOBJS)
 	@echo + ld $@
+	@echo $(KOBJS);
+	@echo "kobjs";
+	@echo $(kernel);
 	$(V)$(LD) $(LDFLAGS) -Ttext 0x100000 -e kern_init -o $@ $(KOBJS)
 	@$(OBJDUMP) -S $@ > $(call asmfile,kernel)
 	@$(OBJDUMP) -t $@ | $(SED) '1,/SYMBOL TABLE/d; s/ .* / /; /^$$/d' > $(call symfile,kernel)
@@ -198,7 +201,8 @@ qemu-gdb: $(WHEATIMG) .gdbinit
 
 qemu-nox-gdb: $(WHEATIMG) .gdbinit
 	@echo "*** Now run 'gdb'." 1>&2
-	$(QEMU) -nographic $(QEMUOPTS) -S $(QEMUGDB)
+#	$(QEMU) -nographic $(QEMUOPTS) -S $(QEMUGDB)
+	$(V)$(QEMU) -serial mon:stdio -hda $< -nographic -S $(QEMUGDB)
 
 
 .PHONY: clean
