@@ -23,5 +23,5 @@ end
 echo + target remote localhost:26000\n
 target remote localhost:26000
 
-# echo + symbol-file kernel\n
-# symbol-file kernel
+echo + symbol-file bin/kernel\n
+symbol-file bin/kernel
